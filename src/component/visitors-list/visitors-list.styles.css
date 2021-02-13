@@ -1,0 +1,9 @@
+/* .style={{padding:20 , margin:'13px auto'}} */
+
+.visitors-list-item-paper {
+    padding: 20px;
+    margin: 15px auto;
+    display: grid;
+    grid-template-columns: 100px calc(100% - 100px);
+    width: 90%;
+}
