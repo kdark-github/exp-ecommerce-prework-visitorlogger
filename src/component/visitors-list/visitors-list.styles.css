@@ -2,8 +2,24 @@
 
 .visitors-list-item-paper {
     padding: 20px;
-    margin: 15px auto;
+    margin: 20px auto;
     display: grid;
-    grid-template-columns: 100px calc(100% - 100px);
+    grid-template-columns: 220px calc(100% - 220px);
     width: 90%;
+    font-weight: 300;
+}
+
+.visitor-det-lbl
+{
+    font-weight: 400;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.visitor-image
+{
+    width: 180px;
+    /* height: 180px; */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }

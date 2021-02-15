@@ -1,0 +1,118 @@
+/* main card css */
+
+.News-card-main-ctn {
+    width: 90%;
+    margin: 20px auto;
+    box-shadow: 0px 0px 7px 1px #6664;
+    padding: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.News-card-det-ctn {
+    display: flex;
+}
+
+.News-card-det-ctn>div:last-child {
+    margin: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Card detail css */
+
+.News-card-det {
+    width: calc(100% - 200px);
+}
+
+.News-card-det div:first-child {
+    padding: 5px 0px;
+    font-weight: 200;
+}
+
+.News-card-det h2 {
+    margin: 7px 0px;
+    font-weight: 500;
+    color: #969696;
+    font-weight: 28px;
+}
+
+.News-card-det:hover h2 {
+    color: #4a4a4a;
+}
+
+.News-card-det:hover article {
+    color: #4a4a4a;
+}
+
+.News-card-det article {
+    margin: 14px 0px;
+    font-weight: 400;
+    color: #969696;
+}
+
+.News-card-det div:last-child {
+    margin: 7px 0px;
+    font-weight: 200;
+    font-size: 15px;
+    color: #444141;
+}
+
+/*  */
+
+.card-footer {
+    color: grey;
+    font-size: 13px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* News content */
+
+.news-link{
+    text-decoration: none;
+    color:#4269b1;
+    display: block;
+    margin:10px 0px;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.news-content-visible {
+    padding: 30px 10px;
+    color: #4a4a4a;
+    overflow: hidden;
+    animation-name: animate-article-height-show;
+    animation-duration:0.1s;
+    animation-timing-function: linear;
+}
+
+@keyframes animate-article-height-show {
+    from {
+        height: 0px;
+    }
+    to {
+        height: auto;
+    }
+}
+
+.news-content-hide {
+    height: 0px !important;
+    padding: 0px;
+    overflow: hidden;
+    animation-name: animate-article-height-hide;
+    animation-duration:0.1s;
+    animation-timing-function: linear;
+}
+
+@keyframes animate-article-height-hide {
+    from {
+        height: auto;
+    }
+    to {
+        height: 0px;
+    }
+}
+

@@ -8,3 +8,9 @@
     margin: 10px auto;
     padding: 14px;
 }
+
+.tf-grid
+{
+    display: flex;
+    justify-content: center;
+}

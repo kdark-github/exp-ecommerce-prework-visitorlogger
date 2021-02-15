@@ -10,7 +10,7 @@ import './add-visitor.style.css';
 import { addVisitorToList } from '../../redux/visitors/visitor.actions';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
-
+import Webcam from "react-webcam";
 
 
 const visitTypeList = [
@@ -30,6 +30,16 @@ const initial_state = {
     exit_time: new Date()
 }
 
+
+const videoConstraints = {
+    width: 360,
+    height: 240,
+    facingMode: "user"
+};
+
+
+
+
 const AddVisitor = ({ logVisit, ...props }) => {
 
     const [visitDetails, setVisitDetails] = React.useState(initial_state);
@@ -38,6 +48,9 @@ const AddVisitor = ({ logVisit, ...props }) => {
         selfie: "",
         time: ""
     })
+
+    const [img, setImg] = React.useState();
+    const webcamRef = React.useRef(null);
 
     const handleInputChanges = event => {
 
@@ -80,27 +93,49 @@ const AddVisitor = ({ logVisit, ...props }) => {
             date_of_entry,
             person_to_visit,
             entry_time: entry_time.toLocaleTimeString(),
-            exit_time: exit_time.toLocaleTimeString()
+            exit_time: exit_time.toLocaleTimeString(),
+            selfie: webcamRef.current.getScreenshot()
         }
 
         console.log({ entry_time, exit_time });
 
         setAlerts({
             time: entry_time === exit_time ? "Entry time & exit time can't be same." : "",
-            selfie: Boolean(selfie) ? "" : "Photo required.",
+            selfie: Boolean(data_to_save.selfie) ? "" : "Image Error."
         })
-        if (!!!Boolean(selfie) && entry_time === exit_time) return
+        if (entry_time === exit_time || !!!Boolean(data_to_save.selfie)) return
 
         logVisit(data_to_save);
         setVisitDetails(initial_state)
 
     }
+
+
+    const capture = React.useCallback(
+        () => {
+
+        },
+        [webcamRef]
+    );
+
     return (
         <Paper className="visitor-add-paper">
             <form onSubmit={addLog}>
-                <Grid container justify="center">
 
-                    <Grid item lg={4} md={4} sm={6} xs={12}>
+                <div style={{ textAlign: 'center' }}>
+                    <Webcam
+                        audio={false}
+                        height={240}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        width={360}
+                        videoConstraints={videoConstraints}
+                    />
+                    <div style={{ color: "#4a4a4a", fontSize: '15px', padding: "5px" }}>Note: If Webcam not working please reopen browser or press ctrl+shift+R.</div>
+                </div>
+                <Grid container >
+
+                    <Grid item lg={4} md={4} sm={6} xs={12} className="tf-grid">
                         <TextField
                             className="visitor-tf"
                             required
@@ -111,7 +146,7 @@ const AddVisitor = ({ logVisit, ...props }) => {
                         />
                     </Grid>
 
-                    <Grid item lg={4} md={4} sm={6} xs={12}>
+                    <Grid item lg={4} md={4} sm={6} xs={12} className="tf-grid">
                         <TextField
                             className="visitor-tf"
                             required
@@ -123,7 +158,7 @@ const AddVisitor = ({ logVisit, ...props }) => {
                         />
                     </Grid>
 
-                    <Grid item lg={4} md={4} sm={6} xs={12}>
+                    <Grid item lg={4} md={4} sm={6} xs={12} className="tf-grid">
                         <TextField
                             className="visitor-tf"
                             required
@@ -143,7 +178,7 @@ const AddVisitor = ({ logVisit, ...props }) => {
                     </Grid>
 
 
-                    <Grid item lg={4} md={4} sm={6} xs={12}>
+                    <Grid item lg={4} md={4} sm={6} xs={12} className="tf-grid">
                         <TextField
                             className="visitor-tf"
                             required
@@ -155,7 +190,7 @@ const AddVisitor = ({ logVisit, ...props }) => {
                     </Grid>
 
 
-                    <Grid item lg={4} md={4} sm={6} xs={12}>
+                    <Grid item lg={4} md={4} sm={6} xs={12} className="tf-grid">
 
                         <MuiPickersUtilsProvider utils={LuxonUtils}>
                             <TimePicker required className="visitor-tf" autoOk label="Entry Time" name="entry_time" value={visitDetails.entry_time} onChange={time => handleTimers("entry_time", time)} />
@@ -165,7 +200,7 @@ const AddVisitor = ({ logVisit, ...props }) => {
                     </Grid>
 
 
-                    <Grid item lg={4} md={4} sm={6} xs={12}>
+                    <Grid item lg={4} md={4} sm={6} xs={12} className="tf-grid">
 
                         <MuiPickersUtilsProvider utils={LuxonUtils}>
                             <TimePicker required className="visitor-tf" autoOk label="Exit Time" name="exit_time" value={visitDetails.exit_time} onChange={time => handleTimers("entry_time", time)} />
@@ -176,9 +211,10 @@ const AddVisitor = ({ logVisit, ...props }) => {
 
 
                     <div style={{ color: 'red', padding: 10 }}>{alerts.time}</div>
-                    <div >
+                    <div style={{ color: 'red', padding: 10 }}>{alerts.selfie}</div>
+                    <div style={{ padding: '20px', textAlign: "right", width: '100%' }} >
                         <Button style={{ marginRight: '13px' }} onClick={e => setVisitDetails(initial_state)} color="primary" variant="contained">Clear</Button>
-                        <Button type="submit" color="primary" variant="contained">Log</Button>
+                        <Button type="submit" color="primary" variant="contained"> Capture photo and Log</Button>
 
 
                     </div>
